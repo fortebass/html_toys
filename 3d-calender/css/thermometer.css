@@ -1,0 +1,88 @@
+
+#thermometer_content {
+    background-image: url("../image/mood.png");
+    position: absolute;
+    left:780px;
+    top:200px;
+    width:200px;
+    height:325px;
+    padding:0;
+
+    -webkit-transform: scale(0.7,0.7);
+       -moz-transform: scale(0.7,0.7);
+         -o-transform: scale(0.7,0.7);
+            transform: scale(0.7,0.7);
+}
+
+#thermometer {
+    position: relative;
+    margin-left: 55px;
+    width:20px;
+    height:250px;
+}
+
+.thermometer_track {
+    height:240px;
+    top:20px;
+    width:20px;
+    margin-left: 35px;
+    position: relative;
+    /*background: #bfbfbf;*/
+    background-position: 0 -1px;
+    background-size: 100% 5%;
+    border-radius:30px;
+}
+
+#thermometer_progress {
+    height:0%;
+    width:100%;
+    background: #81BEF7;
+    border-radius:30px;
+    position: absolute;
+    bottom:0;
+    left:0;
+    top:auto;
+}
+
+#thermometer_goal {
+    border: 3px white solid;
+    border-radius: 10px;
+    border-bottom: 0px;
+    position:absolute;
+    top:0;
+}
+
+#thermometer_amountA {
+    display: inline-block;
+    color:#333;
+    width: 60px;
+    position: absolute;
+}
+#thermometer_amountB {
+    display: inline-block; 
+    color:#333;
+    width: 60px;
+}
+
+#thermometer_progress {
+    /*width:20px;*/
+    position: absolute;
+    color:#b1bb1e;
+    right:0;
+    transition:all 1s;
+    -webkit-transition:all 1s;
+}
+
+/* Bottem Button */
+#thermometer_btn{
+    width:80px;
+    height:80px;
+    margin-left: 60px;
+    background: #81BEF7;
+    border-radius: 100%;
+    border: 3px white solid;
+    color: #fff;
+    display: inline-block;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+}
