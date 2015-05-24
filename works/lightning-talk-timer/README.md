@@ -1,4 +1,4 @@
-lightning-talk-timer
+lightning talk timer
 ====================
 
 Imitate lightning talk timer in itunes
