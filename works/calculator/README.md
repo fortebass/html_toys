@@ -1,4 +1,0 @@
-htc calculator
-====================
-
-htc calculator
