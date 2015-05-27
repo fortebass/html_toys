@@ -1,0 +1,22 @@
+*{
+    font-family: 'Open Sans', Arial, 'Lucida Grande', sans-serif;
+    font-size: 16px;
+}
+
+body {
+    width: 99%;
+    height: 100%;
+    background:#d9c68c;
+}
+
+#bottle{
+	/*width: 35%;
+	height: 35%;*/
+	margin: 79px 85px;
+}
+
+#canvas{
+	position: absolute;
+	top: 0px;
+	margin: 0px 100px;
+}

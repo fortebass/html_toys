@@ -1,0 +1,16 @@
+
+#genie_container {
+    position: absolute;
+    top:400px;
+    transition:all 5s ease-in-out;
+    -webkit-transition:all 5s ease-in-out;
+}
+
+.genie_idle{
+    left:1400px;
+    
+}
+
+.genie_motion{
+    left:100px;
+}

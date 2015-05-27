@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>TTTTTTTTeamA</title>
+		<link rel="stylesheet" type="text/css" href="css/style2.css"/>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>		
+		<script type="text/javascript">
+			var websocket,
+				iamplayer;
+
+			/*start init() by shelly*/
+			function init () {
+				var slide = false;
+				var menu = document.getElementById('menu');
+				var btn_1 = document.getElementById('list');
+				var btn_2 = document.getElementById('refresh');
+				menu.addEventListener('click',function slideout(){
+					if(slide==false){
+						btn_1.style.webkitAnimationName = 'listoutf';
+						btn_2.style.webkitAnimationName = 'listoutt';
+						slide = true;
+					}else{
+						btn_1.style.webkitAnimationName = 'listbackf';
+						btn_2.style.webkitAnimationName = 'listbackt';
+						slide = false;
+					}
+				},false);			
+			}
+			/*end init()*/
+
+
+			// Added by Moto
+			function switchPageOne(){
+				// edit by forte
+				var userid = document.getElementById("nameinput").value;
+				iamplayer = {
+		            state: "login",//"login","restart","playing","fail","succeed"
+		            player:{
+		                playing:1,
+		                id:userid,
+		                takeTool:"none",
+		                releaseTool:"none",
+		                toolAngle:0,
+		                toolPosX:null,
+		                toolPosY:null
+		            },
+		            level:1
+		        };
+
+				buildWebSocket();// edit by forte
+
+				var mainpage = document.getElementById("mainpage");
+				mainpage.setAttribute("class","mainpage-move-one");
+				
+				var page_two = document.getElementById("page_two");
+				page_two.addEventListener('click',function(){
+					mainpage.setAttribute("class","mainpage-move-two");
+				});
+				
+				var page_three = document.getElementById("page_three");;
+				page_three.addEventListener('click',function(){
+					mainpage.setAttribute("class","mainpage-move-three");
+
+					// document.addEventListener("keypress", function(e){
+					// 	console.log(e.keyCode);
+					// 	// switch(e.keyCode){
+
+					// 	// }
+					// }, false);
+
+					iamplayer.state = "playing";
+					pipeGameStart();// edit by forte
+				});
+			}
+
+			function buildWebSocket(){
+				websocket = new WebSocket('ws://192.168.33.5:8005/');
+				websocket.onopen = function() {
+				    websocket.send(JSON.stringify(iamplayer));
+				};
+				websocket.onclose = function(message) {///// when websocket.close() called
+				    console.log('close : received: %s', message);
+				};
+				websocket.onerror = function(message) {
+				    console.log('error : received: %s', message);
+				};
+				websocket.onmessage = function(message) {
+				    var obj = JSON.parse(message.data);
+				    // console.log('received: %s', message.data);
+				    /*
+				    {
+				        gameState:"wating",//"wating","restart","playing","fail","succeed"
+				        playCount:3,
+				        players:[
+				            {
+				                playing:1,
+				                id:"001",
+				                takeTool:"tool01",
+				                toolAngle:1,
+				                toolPosX:10,
+				                toolPosY:10
+				            }
+				        ],
+				        level:1
+				    };
+				    */
+				    if(obj.gameState == "login"){
+				        iamplayer.state = "login";
+				    }
+				    else if(obj.gameState == "restart"){
+				        iamplayer.state = "restart";
+				    }
+				    else if(obj.gameState == "succeed"){
+				        iamplayer.state = "succeed";
+				    }
+					else if(obj.gameState == "fail"){
+				        iamplayer.state = "fail";
+				    }
+					else if(obj.gameState == "playing"){
+				        iamplayer.state = "playing";
+				        iamplayer.level = obj.level;
+				    }
+
+				    for (var i = obj.players.length - 1; i >= 0; i--) {
+				        var otherPlayer = obj.players[i];
+				        if(otherPlayer.id != iamplayer.player.id){
+				            if(otherPlayer.releaseTool != "none" && otherPlayer.takeTool == "none"){
+				            	if(otherPlayer.releaseTool in entityCache)
+				                	entityCache[otherPlayer.releaseTool].SetType(b2Body.b2_dynamicBody);
+				            }
+				            else if(otherPlayer.takeTool in  entityCache){
+				                var takeTool = entityCache[otherPlayer.takeTool];
+				                takeTool.SetType(b2Body.b2_staticBody);
+				                takeTool.SetAngle(otherPlayer.toolAngle);
+				                takeTool.GetUserData().playerName = otherPlayer.id;
+				                
+				                var pos = takeTool.GetPosition();
+				                pos.x = otherPlayer.toolPosX;
+				                pos.y = otherPlayer.toolPosY;
+				                takeTool.SetPosition(pos);  
+				            }
+				        }
+				    };
+				};
+			}
+
+		</script>
+	</head>
+	<body id="mybody" onLoad="init()">
+		<div id="menu">Menu</div>
+		<section id="set-7">
+				<div class="hi-icon-effect-7 hi-icon-effect-7a">
+					<a href="#" class="hi-icon hi-icon-list" id="list">List</a>
+					<a href="#" class="hi-icon hi-icon-refresh" id="refresh">Refresh</a>
+				</div>
+		</section>	
+		<div id="mainpage">
+			<!-- Page1 -->
+			<div id="page_one" class="page">
+				<div id="enter-your-name"> Enter Your Name
+					<div id="myname">
+						<input id="nameinput" type="text" size="15" autofocus>
+					</div>
+					<button id="playbutton" onclick="switchPageOne()"> Play</button>
+				</div>
+			</div>
+			
+			<!-- Page2 -->
+			<div id="page_two" class="page" >
+				<img src="pic/bg2.jpg" width="1680" height="1050">
+			</div>
+
+			<!-- Page3 -->
+			<div id="page_three" class="page" >
+				<img src="pic/bg3.jpg" width="1680" height="1050">
+			</div>		
+
+			<!-- Page4 -->
+			<div id="page_four" class="page" >
+				<canvas id="game" width="1680" height="1050" ></canvas>
+			</div>						
+		</div>
+	</body>
+</html>
+<script src="./js/Box2d.min.js" ></script>
+<script src="./js/envConfig.js" ></script>
+<script src="./js/utility.js" ></script>
+<script src="./js/gameObject.js" ></script>
+<script src="./js/entities.js" ></script>
+<script src="./js/pactice.js" ></script>
