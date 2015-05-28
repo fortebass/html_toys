@@ -1,0 +1,69 @@
+h1 {
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+  line-height:78px;
+}
+
+h2{
+    margin-top: 16.6px;
+    line-height: 30px;
+}
+
+.page-header{
+    /*padding: 6rem 6rem 4rem 6rem;*/
+    margin: 0 0 4rem 0;
+}
+
+.page-header .btn-group + .btn-group {
+  margin-left: 1rem;
+}
+
+
+
+.btn {
+    font-size: 16px;
+}
+
+@media screen and (max-width: 64em) and (min-width: 42em){
+    .btn{
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1200px){
+    .col-1_5{
+        float:left;
+        width: 12.5%;
+    }
+}
+
+.btn-default{
+    width: auto;
+    padding: 8px 16px;
+    color: rgb(96, 108, 113);
+    border-color: rgb(96, 108, 113);
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.btn-default:active, .btn-default:hover{
+    color: rgba(0, 0, 0, 0.8);
+    border-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(96, 108, 113, 0.3);
+}
+
+
+img {
+  border: 0;
+    vertical-align: middle;
+      border-radius: 50%;
+}
+
+.show-works {
+    margin-bottom: 20px;
+    text-align: center;
+}
